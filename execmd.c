@@ -15,6 +15,7 @@ path = get_location(command);
 if (execve(path, argv, NULL) == -1)
 {
 perror("Error:");
+exit(1);
 };
 }
 }
