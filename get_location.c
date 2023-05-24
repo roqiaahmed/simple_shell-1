@@ -13,8 +13,10 @@ int command_num, token_num;
 struct stat buff;
 
 path = getenv("PATH");
-if (path)
+if (!path)
 {
+return NULL;
+}
 path_copy = strdup(path);
 token = strtok(path_copy, ":");
 while (token != NULL)
@@ -29,7 +31,7 @@ strcat(full_path, "\0");
 if (stat(full_path, &buff) == 0)
 {
 free(path_copy);
-return (full_path);
+return full_path;
 }
 else
 {
@@ -40,10 +42,7 @@ token = strtok(NULL, ":");
 free(path_copy);
 if (stat(command, &buff) == 0)
 {
-return (command);
+return (strdup(command));
 }
 return (NULL);
 }
-return (NULL);
-}
-
