@@ -58,13 +58,12 @@ characters = getline(&buff, &buff_size, stdin);
 if (characters == -1)
 {
 printf("Exiting shell....\n");
-return (-1);
+exit(0);
 }
 buff_copy = malloc(sizeof(char) * characters);
 if (buff_copy == NULL)
 {
 perror("tsh: memory allocation error");
-return (-1);
 }
 strcpy(buff_copy, buff);
 token = strtok(buff, delims);
