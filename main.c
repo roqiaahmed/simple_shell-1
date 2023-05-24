@@ -3,7 +3,7 @@
 /**
  * print_environment - Prints all environment variables
  */
-void print_environment()
+void print_environment(void)
 {
 extern char **environ;
 char **envp = environ;
@@ -24,7 +24,7 @@ pid = fork();
 if (pid == -1)
 {
 perror("tsh: fork error");
-exit(-1);
+exit(1);
 }
 else if (pid == 0)
 {
@@ -45,7 +45,7 @@ wait(NULL);
  */
 int main(int argc, char **argv)
 {
-char *buff = NULL, *buff_copy = NULL, *token, *prompt = "$ ";
+char *buff = NULL, *buff_copy = NULL, *token, *prompt = "$ ", *location;
 size_t buff_size = 0;
 ssize_t characters;
 const char *delims = " \n";
@@ -83,8 +83,14 @@ strcpy(argv[i], token);
 token = strtok(NULL, delims);
 }
 argv[i] = NULL;
+location = get_location(argv[0]);
 if (strcmp(argv[0], "exit") == 0)
 break;
+if (location == NULL)
+{
+printf("Command not found: %s\n", argv[0]);
+continue;
+}
 else if (strcmp(argv[0], "env") == 0)
 {
 print_environment();
